@@ -1,6 +1,6 @@
 function preprocessMHA(conf_f)
 %Name: preprocessMHA.m
-%Description: Code to preprocess imaging data for ICC project. Generated
+%Description: Code to preprocess Insight Meta-Image imaging data for ICC project. Generated
 %             based on DataGeneration.m, recieved from Travis Williams
 %             2020.
 %
