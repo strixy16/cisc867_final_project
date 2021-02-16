@@ -1,4 +1,4 @@
-function createCSV(excelfile,output_fname, conf_f)
+function createCSV(excelfile, output_fname, conf_f)
 % Name: createCSV
 % Description: Function to generate CSV file to correspond patients with images and
 % slices from preprocessMHA
@@ -17,6 +17,8 @@ function createCSV(excelfile,output_fname, conf_f)
 % Notes: 
 %   Feb 6, 2021 - added function description and more commenting
 %               - added conf_f input to use configuration files
+%   Feb 15/16 2021 - added more commenting
+%                  - changed some variable names to be more readable
 
     % Getting variables from configuration file
     if ischar(conf_f)
@@ -25,6 +27,8 @@ function createCSV(excelfile,output_fname, conf_f)
     else
         options = conf_f;
     end
+    
+    
     
     % Get location of bin files with zeros in background
     bin_dir = strcat(options.BinLoc, 'Zero/');
@@ -36,9 +40,10 @@ function createCSV(excelfile,output_fname, conf_f)
     tfiles_allinfo = struct2table(bin_files);
     % Extract file names and sort names alphanumerically, now a cell array
     tfiles = natsort(tfiles_allinfo{:,'name'});
-    % Make two copies of file names for use later ? 
+    % List of original slice file names 
     otfiles = tfiles;
-    % For storing unique file names 
+    % For storing unique slice file names - list of patients, repeated # of times
+    % there are slices for that patient
     utfiles = tfiles;
 
     % Parsing through filename to get slice index
@@ -48,8 +53,8 @@ function createCSV(excelfile,output_fname, conf_f)
         bidx = strfind(tfiles{i},'.bin');
         % Underscore index
         uidx = strfind(tfiles{i},'_');
-        % Getting last index of file name without _Slice_#.bin
-        nidx = uidx(end-1);
+        % Getting last index of file name without _Tumor_Slice_#.bin
+        nidx = uidx(end-2);
         % Extract patient label out of file name
         utfiles{i}(nidx:end) = '';
         % Get just slice number
@@ -57,44 +62,61 @@ function createCSV(excelfile,output_fname, conf_f)
         tfiles{i}(1:uidx(end)) = '';
     end
     % Get unique file names without resorting (need order to correspond
-    % back to slices?)
+    % back to slices)
     % didx connects slices back to patients
-    [ut,~,didx] = unique(utfiles, 'stable');
+    [ut,~,slice2pat] = unique(utfiles, 'stable');
     % Get number of slices for each patient
-    count = hist(didx,unique(didx));
+    count = hist(slice2pat,unique(slice2pat));
 
     % Reading in HGP excel file -- replace with RFS_Scout
     % if replace ~ get raw excel file as a cell array
     % num will capture both columns of numbers of RFS 
-    % TODO: 
+    % num = [RFS codes (1 or 0), RFS time (months?)]
+    % txt = [header; patient_ids empty empty]
     [num,txt,~] = xlsread(excelfile) ;
 
-    %TODO: figure out what happens from here onward
-    gtxt = txt(2:end,1);
-    [~, ia, ib] = intersect(ut, gtxt);
+    % get just the patient ids from label spreadsheet
+    pats_with_labels = txt(2:end,1);
+    % match up these names with the unique patient ids that we have slices
+    % for
+    [~, ut_idx, pwl_idx] = intersect(ut, pats_with_labels);
     asc_num = (1:length(ut))';
-    loc = ismember(asc_num, ia);
-    zidx = find(loc==0);
+    % finding which indices do/don't have label
+    loc = ismember(asc_num, ut_idx);
+    % patient index with no label in the slice list
+    % nolabel_patient
+    nl_patient = find(loc==0);
 
-    tmp = [];
-    for i=1:length(zidx)
-        temp = find(didx==zidx(i));
-        tmp = [tmp; temp];
+    % Finding slice indices with no label to drop from output
+    % nolabel_slices
+    nl_slices = [];
+    for i=1:length(nl_patient)
+        % nl_patient contains what patient index the slices belong to
+        % zidx is patient indices with no labels
+        nl_pat_slice_idx = find(slice2pat==nl_patient(i));
+        nl_slices = [nl_slices; nl_pat_slice_idx];
     end
 
-    otfiles(tmp) = [];
-    didx(tmp) = [];
-    tfiles(tmp) = [];
+    % Removing files with no label from 
+    % Slice file name list, slice2pat index, and slices matrix
+    otfiles(nl_slices) = [];
+    slice2pat(nl_slices) = [];
+    tfiles(nl_slices) = [];
 
-    num_sort = num(ib);
-    tmp2 = [];
-    for i=1:length(num_sort)
-        temp = num_sort(i) * ones(1,count(ia(i)));
-        tmp2 = [tmp2; temp'];
+    % get rows from label spreadsheet for the corresponding patients in ut
+    % withlabel_patient
+    wl_patient = num(pwl_idx);
+    % withlabel_slices
+    wl_slices = [];
+    for i=1:length(wl_patient)
+        pat_wl_slice_idx = wl_patient(i) * ones(1,count(ut_idx(i)));
+        wl_slices = [wl_slices; pat_wl_slice_idx'];
     end
 
+    % TODO: make the last label in header part of the input to this
+    % function
     % HGP = histologic growth pattern (0 or 1)
-    header = {'File', 'ID', 'Slice', 'HGP'};
-    data = [cellstr(otfiles), num2cell(didx), cellstr(tfiles), num2cell(tmp2)];
+    header = {'File', 'ID', 'Slice', 'RFS'};
+    data = [cellstr(otfiles), num2cell(slice2pat), cellstr(tfiles), num2cell(wl_slices)];
     writetable(cell2table([header;data]),output_fname,'writevariablenames',0)
 end
