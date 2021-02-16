@@ -9,7 +9,7 @@ function preprocessMHA(conf_f)
 %Environment: MATLAB R2020b
 %Notes: 
 %Author: Katy Scott
-%Created: 14 Jan 2020
+%Created: 14 Jan 2021
 
 % Files are in O
 % /Users/katyscott/Documents/ICC/Data/cholangio/Erasmus/tumors/*Tumor*.mhd
