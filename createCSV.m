@@ -1,4 +1,4 @@
-function createCSV(excelfile, output_fname, conf_f)
+function createCSV(conf_f)
 % Name: createCSV
 % Description: Function to generate CSV file to correspond patients with images and
 % slices from preprocessMHA
@@ -19,6 +19,7 @@ function createCSV(excelfile, output_fname, conf_f)
 %               - added conf_f input to use configuration files
 %   Feb 15/16 2021 - added more commenting
 %                  - changed some variable names to be more readable
+%                  - replaced excelfile and output_fname with configure
 
     % Getting variables from configuration file
     if ischar(conf_f)
@@ -27,8 +28,6 @@ function createCSV(excelfile, output_fname, conf_f)
     else
         options = conf_f;
     end
-    
-    
     
     % Get location of bin files with zeros in background
     bin_dir = strcat(options.BinLoc, 'Zero/');
@@ -68,12 +67,12 @@ function createCSV(excelfile, output_fname, conf_f)
     % Get number of slices for each patient
     count = hist(slice2pat,unique(slice2pat));
 
-    % Reading in HGP excel file -- replace with RFS_Scout
+    % Read in label spreadsheet 
     % if replace ~ get raw excel file as a cell array
     % num will capture both columns of numbers of RFS 
     % num = [RFS codes (1 or 0), RFS time (months?)]
     % txt = [header; patient_ids empty empty]
-    [num,txt,~] = xlsread(excelfile) ;
+    [num,txt,~] = xlsread(options.Labels) ;
 
     % get just the patient ids from label spreadsheet
     pats_with_labels = txt(2:end,1);
@@ -118,5 +117,5 @@ function createCSV(excelfile, output_fname, conf_f)
     % HGP = histologic growth pattern (0 or 1)
     header = {'File', 'ID', 'Slice', 'RFS'};
     data = [cellstr(otfiles), num2cell(slice2pat), cellstr(tfiles), num2cell(wl_slices)];
-    writetable(cell2table([header;data]),output_fname,'writevariablenames',0)
+    writetable(cell2table([header;data]),options.OutputCSV,'writevariablenames',0)
 end
