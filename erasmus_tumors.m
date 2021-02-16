@@ -21,5 +21,5 @@ function opt = erasmus_tumors
     % Spreadsheet of labels, excel file, for use in createCSV.m
     opt.Labels = "/Users/katyscott/Documents/ICC/Data/RFS_Scout.xlsx";
     % File name + location to output in createCSV.m
-    opt.OutputCSV = "/Users/katyscott/Documents/ICC/Data/Labels/Erasmus_RSF.csv";
+    opt.OutputCSV = "/Users/katyscott/Documents/ICC/Data/Labels/Erasmus_RFS.csv";
 end
