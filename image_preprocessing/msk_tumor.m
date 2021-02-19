@@ -19,6 +19,10 @@ function opt = msk_tumor
     % NOTE: this has subfolders NaN and zero in it 
     opt.BinLoc = "/Users/katyscott/Documents/ICC/Data/cholangio/MSK/bin_tumor/";
     
+    % Dimensions for image resize step in preprocessMHA (299 x 299 is
+    % Inception requirement)
+    opt.ImageSize = [299 299];
+    
     % Spreadsheet of labels, excel file, for use in createCSV.m
     opt.Labels = "/Users/katyscott/Documents/ICC/Data/RFS_Scout.xlsx";
     % File name + location to output in createCSV.m

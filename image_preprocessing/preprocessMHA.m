@@ -110,7 +110,7 @@ function preprocessMHA(conf_f)
                 
                 % resizing for Inception currently
                 % TODO: make this an input argument
-                imageCrR = imresize(imageCr, [299 299]);
+                imageCrR = imresize(imageCr, options.ImageSize);
 %                 figure();
 %                 imshow(imageCrR, []);
                 
