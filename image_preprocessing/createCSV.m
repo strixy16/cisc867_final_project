@@ -1,12 +1,11 @@
-function createCSV(conf_f)
+function createCSV(conf_f, background)
 % Name: createCSV
 % Description: Function to generate CSV file to correspond patients with images and
 % slices from preprocessMHA
 %
 % INPUT: 
-%   excelfile    -- spreadsheet with labels
-%   output_fname -- name to give CSV file output
 %   conf_f       -- configuration file for different datasets
+%   background   -- either "zeros" or "nans"
 %
 % OUTPUT:
 %   A CSV file named output_fname with FILL IN WHAT IT IS HERE
@@ -29,10 +28,19 @@ function createCSV(conf_f)
         options = conf_f;
     end
     
-    % Get location of bin files with zeros in background
-    bin_dir = strcat(options.BinLoc, 'Zero/');
-    % Bring up folder selection box to find bin files
-%     d = uigetdir(pwd, 'Select a folder');
+    if background == "nans"
+        % use location of bin files with nans in background
+        bin_dir = options.NaNLoc;
+        output_fname = options.NaNCSV;
+    else
+        % use location of bin files with zeros in background
+        if background ~= "zeros"
+            disp("Incorrect input for background, using zeros.")
+        end
+        bin_dir = options.ZeroLoc;
+        output_fname = options.ZeroCSV;
+    end
+        
     % Get list of all bin files
     bin_files = dir(fullfile(bin_dir, '*.bin'));
     % Have folder as structure, change to table for stuff later on
@@ -112,10 +120,8 @@ function createCSV(conf_f)
         wl_slices = [wl_slices; pat_wl_slice_idx'];
     end
 
-    % TODO: make the last label in header part of the input to this
-    % function
-    % HGP = histologic growth pattern (0 or 1)
-    header = {'File', 'ID', 'Slice', 'RFS'};
+    % Setting up and outputing CSV file
+    header = {'File', 'ID', 'Slice', options.LabelType};
     data = [cellstr(otfiles), num2cell(slice2pat), cellstr(tfiles), num2cell(wl_slices)];
-    writetable(cell2table([header;data]),options.OutputCSV,'writevariablenames',0)
+    writetable(cell2table([header;data]),output_fname,'writevariablenames',0)
 end

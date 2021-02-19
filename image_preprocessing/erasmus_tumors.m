@@ -10,13 +10,15 @@ function opt = erasmus_tumors
 %Created: 14 Jan 2021
 %Updates:
 % Feb 16, 2021 - updated comments, added OutputCSV for createCSV
+% Feb 19, 2021 - updated BinLoc so all tumor images go in one place
+%              - added ImageSize argument
 
     % Location of image files for tumour image set, for use in preprocessMHA
     opt.ImageLoc = "/Users/katyscott/Documents/ICC/Data/cholangio/Erasmus/tumors/";
     % Location of bin folder containing tumour image slice set, for use in
     % preprocess MHA and createCSV
     % NOTE: this has subfolders NaN and zero in it 
-    opt.BinLoc = "/Users/katyscott/Documents/ICC/Data/cholangio/Erasmus/bin_tumors/";
+    opt.BinLoc = "/Users/katyscott/Documents/ICC/Data/Images/Tumors/";
     
     % Dimensions for image resize step in preprocessMHA (299 x 299 is
     % Inception requirement)

@@ -10,10 +10,8 @@ function preprocessMHA(conf_f)
 %Notes: 
 %Author: Katy Scott
 %Created: 14 Jan 2021
-
-% Files are in O
-% /Users/katyscott/Documents/ICC/Data/cholangio/Erasmus/tumors/*Tumor*.mhd
-% /Users/katyscott/Documents/ICC/Data/cholangio/MSK/tumor/*Tumor*.mhd
+%Updates: 
+%  19 Feb 2021 - changed image resizing to be input in conf_f
     
     
     % Getting variables from configuration file
