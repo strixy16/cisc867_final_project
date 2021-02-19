@@ -26,12 +26,12 @@ class RFS_Loader(Dataset):
         self.scaler = MinMaxScaler(feature_range=(0, 1))
         self.transform = transforms.Compose(
             [transforms.ToTensor(),
-             transforms.Normalize(mean=mean, std=std)]
+             transforms.Normalize(mean=mean, std=std)] # mean and std come from preprocessing
         )
 
     def __getitem__(self, index):
         name = self.image[index]
-        hgp = self.label[index]
+        hgp = self.label[index] # replace hpg with rfs
         id_orig = self.id[index]
         slice_orig = self.slice[index]
         dim = self.dim
@@ -39,21 +39,28 @@ class RFS_Loader(Dataset):
 
         img = np.fromfile(data_path + str(name))
 
+        # fixing dimensions problem
         hgp = hgp.squeeze()
         id_orig = id_orig.squeeze()
         slice_orig = slice_orig.squeeze()
 
         # process img
+        # fix the hardcoding here, make it read the size in and check
+        # this has to be the same number of pixels as are in bin file
+        # taking from 1D to 2D
         img = np.reshape(img, (299, 299), order='F')
         # img = cropND(img, (260, 260))
 
         img[np.isnan(img)] = 0
+        # compressing image to dimension
         img = resize(img, (dim, dim), anti_aliasing=True, mode='reflect')
+        # can probably get rid of this next part
         tmp = (img != 0).astype(float)
         tmp = ndimage.binary_fill_holes(tmp).astype(float)
         tmp[tmp == 0] = np.nan
         img = img * tmp
 
+        # make augmentation option?
         rnum = random.randint(0, 3)
         if rnum == 2:
             img = np.flip(img, 0)
@@ -61,8 +68,8 @@ class RFS_Loader(Dataset):
             img = np.flip(img, 1)
 
         # Scale image [0,1]
-        img = np.nan_to_num(img)
-        img = np.stack((img, img, img), axis=2)
+        img = np.nan_to_num(img) # can ignore this thing,
+        img = np.stack((img, img, img), axis=2) # make slices 3D (RGB)
         img = self.transform(img)
         return img, hgp, id_orig, slice_orig
 
@@ -114,7 +121,7 @@ class SMOTE_Loader(Dataset):
 
         return len(self.label)
 
-
+# Data augmentation loader - called by JoinDatasets
 class SyntheticLoader(Dataset):
 
     def __init__(self, csv_path, data_path, idx, synth, mean, std, img_dim):
@@ -209,7 +216,7 @@ class SyntheticLoader(Dataset):
 
         return len(self.label)
 
-
+# ignore this
 class WaveletLoader(Dataset):
 
     def __init__(self, csv_path, data_path, idx, synth, mean, std):
@@ -316,8 +323,11 @@ def JoinDatasets(csv_path, data_path, idx, types, mean, std, img_dim, loader):
     if loader=='wave':
         concatData = WaveletLoader(csv_path, data_path, idx, init, mean, std)
     else:
+        # load in data without augmentation
         concatData = SyntheticLoader(csv_path, data_path, idx, init, mean, std, img_dim)
     for i, aug in enumerate(dataset):
+        # create augmentations
         synth = SyntheticLoader(csv_path, data_path, idx, aug, mean, std, img_dim)
+        # join original and augmented data
         concatData = ConcatDataset((synth, concatData))
     return concatData
