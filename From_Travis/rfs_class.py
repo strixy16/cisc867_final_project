@@ -17,10 +17,15 @@ import os
 import fnmatch
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-save_path = '/lila/data/gonen/travis/projects/cholangio/Data/'
-lib_path = save_path + 'chol_surv_files.csv'
-data_path = '/lila/data/gonen/travis/projects/cholangio/Binary_files/NaN/'
-rfs_path = '/lila/data/gonen/travis/projects/cholangio/recurrence/Results/'
+# save_path = '/lila/data/gonen/travis/projects/cholangio/Data/'
+save_path = '/Users/katyscott/Documents/ICC/Data/'
+# lib_path = save_path + 'chol_surv_files.csv'
+lib_path = save_path + 'Labels/RFS_all_tumors_NaN.csv'
+# data_path = '/lila/data/gonen/travis/projects/cholangio/Binary_files/NaN/'
+data_path = '/Users/katyscott/Documents/ICC/Data/Images/Tumors/NaN/'
+# looks like the path to wherever you want to save your output. Worry about this later
+# rfs_path = '/lila/data/gonen/travis/projects/cholangio/recurrence/Results/'
+rfs_path = '/Users/katyscott/Documents/ICC/Data/Results/'
 
 nz_pix_limit = 300  # nz is number of zeros, setting limit for number of pixels in tumour in image
 batch_size = 60
