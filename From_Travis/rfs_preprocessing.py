@@ -151,7 +151,7 @@ def removeSmallScans(csv_path, file_path, thresh):
 def separateClasses(csv_path, idx, split, val, seed):
     data = pd.read_csv(csv_path)
     label = np.asarray(data.iloc[idx, 3])
-    id_data = np.asarray(data.iloc[idx, 1])
+    id_data = np.asarray(data.iloc[idx, 1]) # patient ID
     z_idx = np.asarray(np.where(label == 0)).squeeze() # zero index
     o_idx = np.asarray(np.where(label == 1)).squeeze() # one index
     id_z = id_data[z_idx]
