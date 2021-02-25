@@ -21,3 +21,9 @@ Deep learning for recurrence free survival prediction of ICC patients using imag
 * Trying to work on image loading
 * Have started working on it
 * A lot of Travis's code is dependent on using PyTorch, so stuff is changing for me to use Keras
+
+### February 25th, 2021
+* Going to confirm image data is getting loaded in properly
+* Then finish the preprocessing on it
+* Skipping data augmentation for now, will come back to this
+* Starting data splitting into train and test - working in patient_data_split
