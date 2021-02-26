@@ -27,3 +27,9 @@ Deep learning for recurrence free survival prediction of ICC patients using imag
 * Then finish the preprocessing on it
 * Skipping data augmentation for now, will come back to this
 * Starting data splitting into train and test - working in patient_data_split
+
+### February 26th, 2021
+* Moved main over to a jupyter notebook so I don't have to run the whole file every time
+* Going to try train and test split with entire dataset
+* Loading in data was successful, takes ~18 minutes
+* Something's up with train and test split, not getting too many images in each set, doesn't add up to total
