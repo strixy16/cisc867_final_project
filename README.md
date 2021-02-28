@@ -1,35 +1,62 @@
-# deep-icc
-Term project for CISC 867 - Winter 2021
-Deep learning for recurrence free survival prediction of ICC patients using image and genetic data.
+>📋  A template README.md for code accompanying a Machine Learning paper
 
-## Notes
-### February 15th, 2021
-* Currently only have image processing code
-* From_Travis contains old python code developed by Travis Williams with preliminary implementation of deep learning models
-* preprocessMHA is a function version of DataGeneration
-* msk_ and erasumus_ tumours.m are configuration files for the two image sets, used as input for preprocessMHA and createCSV  
+# Survival Prediction For Intrahepatic Cholangiocarcinoma Using Semi-supervised Deep Learning with Radiographic Images
 
-### February 16th, 2021
-* Finished working through createCSV, have it working with RFS labels now
-* Moved preprocessing code to its own folder
-* Next step is to figure out how to load images into python
+This repository is the official implementation of my term project for CISC 867 - Winter 2021. 
 
-### February 17th, 2021
-* Had meeting with Travis about image loading code
+>📋  Optional: include a graphic explaining your approach/main result, bibtex entry, link to demos, blog posts and tutorials
 
-### February 19th, 2021
-* Trying to work on image loading
-* Have started working on it
-* A lot of Travis's code is dependent on using PyTorch, so stuff is changing for me to use Keras
+## Requirements
 
-### February 25th, 2021
-* Going to confirm image data is getting loaded in properly
-* Then finish the preprocessing on it
-* Skipping data augmentation for now, will come back to this
-* Starting data splitting into train and test - working in patient_data_split
+To install requirements:
 
-### February 26th, 2021
-* Moved main over to a jupyter notebook so I don't have to run the whole file every time
-* Going to try train and test split with entire dataset
-* Loading in data was successful, takes ~18 minutes
-* Something's up with train and test split, not getting too many images in each set, doesn't add up to total
+```setup
+pip install -r requirements.txt
+```
+
+>📋  Describe how to set up the environment, e.g. pip/conda/docker commands, download datasets, etc...
+
+## Training
+
+To train the model(s) in the paper, run this command:
+
+```train
+python train.py --input-data <path_to_data> --alpha 10 --beta 20
+```
+
+>📋  Describe how to train the models, with example commands on how to train the models in your paper, including the full training procedure and appropriate hyperparameters.
+
+## Evaluation
+
+To evaluate my model on ImageNet, run:
+
+```eval
+python eval.py --model-file mymodel.pth --benchmark imagenet
+```
+
+>📋  Describe how to evaluate the trained models on benchmarks reported in the paper, give commands that produce the results (section below).
+
+## Pre-trained Models
+
+You can download pretrained models here:
+
+- [My awesome model](https://drive.google.com/mymodel.pth) trained on ImageNet using parameters x,y,z. 
+
+>📋  Give a link to where/how the pretrained models can be downloaded and how they were trained (if applicable).  Alternatively you can have an additional column in your results table with a link to the models.
+
+## Results
+
+Our model achieves the following performance on :
+
+### [Image Classification on ImageNet](https://paperswithcode.com/sota/image-classification-on-imagenet)
+
+| Model name         | Top 1 Accuracy  | Top 5 Accuracy |
+| ------------------ |---------------- | -------------- |
+| My awesome model   |     85%         |      95%       |
+
+>📋  Include a table of results from your paper, and link back to the leaderboard for clarity and context. If your main result is a figure, include that figure and link to the command or notebook to reproduce it. 
+
+
+## Contributing
+
+>📋  Pick a licence and describe how to contribute to your code repository. 
