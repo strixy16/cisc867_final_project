@@ -1,7 +1,7 @@
 # Name: patient_train_test_split.py
 # Environment: Python 3.8
 # Author: Katy Scott
-# Last updated: February 25, 2021
+# Last updated: February 28, 2021
 
 import numpy as np
 
@@ -10,17 +10,25 @@ def pat_train_test_split(pat_num, label, split_perc, seed):
     """
     Function to split data into training and testing, keeping slices from one patient in one class
     Args:
-        data - np array of images
+        pat_num - numpy array of patient numbers or ids to be split
+        label - numpy array of binary labels for the data
+        split_perc - float value < 1, percentage of data to put in training set, 1 - split_perc will be the testing size
+        seed - seed for patient index shuffling
     Returns:
-        sets - tuple of training and testing indices in a list
+        sets - tuple of training and testing SLICE indices in a list
     """
+    # Checking that split percentage is between 0 and 1 to print better error message
+    if split_perc > 1.0 or < 0.0:
+        print("Invalid split percentage. Must be between 0 and 1.")
+        return -1
+    
     # Separate out positive and negative labels to evenly distribute them between classes
-    # Get index of patients with 0 and 1 label
+    # Get index of slices with 0 and 1 label
     # z => zero, o => one
     z_idx = np.asarray(np.where(label == 0)).squeeze()
     o_idx = np.asarray(np.where(label == 1)).squeeze()
 
-    # Get patient_ids of 0 and 1 labels
+    # Get patient ids of 0 and 1 labels
     z_pats = pat_num[z_idx]
     o_pats = pat_num[o_idx]
 
@@ -44,7 +52,7 @@ def pat_train_test_split(pat_num, label, split_perc, seed):
 
     # Testing patient set
     test_z_pat = uz_pats[split_z:]
-    test_o_pat = uo_pats[:split_o]
+    test_o_pat = uo_pats[split_o:]
 
     train_z_slice = []
     for pat in train_z_pat:
