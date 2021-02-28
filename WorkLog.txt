@@ -33,3 +33,8 @@ Deep learning for recurrence free survival prediction of ICC patients using imag
 * Going to try train and test split with entire dataset
 * Loading in data was successful, takes ~18 minutes
 * Something's up with train and test split, not getting too many images in each set, doesn't add up to total
+
+### February 28th, 2021
+* Worked on draft writeup
+* Found train and test split bug, was using 70 instead of 0.7 for split value and had wrong index for test_o_pat
+* Have model implemented but it is vastly overtraining right now with only 700 images, going to try with more to see if it's lack of data or a bug
