@@ -19,8 +19,11 @@ function opt = all_tumors
     
     % Spreadsheet of labels, excel file, for use in createCSV.m
     opt.Labels = "/Users/katyscott/Documents/ICC/Data/RFS_Scout.xlsx";
-    % Heading
-    opt.LabelType = 'RFS';
+    % Header
+    opt.CSV_header = {'File', 'Pat ID', 'Slice Num', 'RFS Code', 'RFS Time'};
+    
+%     opt.Label1 = 'RFS Code'; % if a patient had cancer recurrence or not
+%     opt.Label2 = 'RFS Time'; % Time to recurrence
     % File name + location to output in createCSV.m
     opt.ZeroCSV = "/Users/katyscott/Documents/ICC/Data/Labels/RFS_all_tumors_zero.csv";
     opt.NaNCSV = "/Users/katyscott/Documents/ICC/Data/Labels/RFS_all_tumors_NaN.csv";

@@ -8,7 +8,8 @@ function createCSV(conf_f, background)
 %   background   -- either "zeros" or "nans"
 %
 % OUTPUT:
-%   A CSV file named output_fname with FILL IN WHAT IT IS HERE
+%   A CSV file containing slice file names, associated patient number,
+%   slice number, and labels from conf_f Labels file
 %
 % Environment: MATLAB R2020b
 % Author: Travis Williams
@@ -19,6 +20,9 @@ function createCSV(conf_f, background)
 %   Feb 15/16 2021 - added more commenting
 %                  - changed some variable names to be more readable
 %                  - replaced excelfile and output_fname with configure
+%   Mar 1, 2021 - updated to include all label columns in options.Labels in
+%                 output
+%               - changed CSV header to be a variable in conf_f
 
     % Getting variables from configuration file
     if ischar(conf_f)
@@ -70,10 +74,10 @@ function createCSV(conf_f, background)
     end
     % Get unique file names without resorting (need order to correspond
     % back to slices)
-    % didx connects slices back to patients
+    % slice2pat connects slices back to patients
     [ut,~,slice2pat] = unique(utfiles, 'stable');
     % Get number of slices for each patient
-    count = hist(slice2pat,unique(slice2pat));
+    num_slices_per_pat = hist(slice2pat,unique(slice2pat));
 
     % Read in label spreadsheet 
     % if replace ~ get raw excel file as a cell array
@@ -111,17 +115,21 @@ function createCSV(conf_f, background)
     tfiles(nl_slices) = [];
 
     % get rows from label spreadsheet for the corresponding patients in ut
-    % withlabel_patient
-    wl_patient = num(pwl_idx);
+    % rfs code for patients with a confirmed label
+    rl_patient = num(pwl_idx,:);
     % withlabel_slices
-    wl_slices = [];
-    for i=1:length(wl_patient)
-        pat_wl_slice_idx = wl_patient(i) * ones(1,count(ut_idx(i)));
-        wl_slices = [wl_slices; pat_wl_slice_idx'];
+    lbl_4_slices = [];
+
+    for i=1:length(rl_patient)
+        recurrence_lbl_for_slices = rl_patient(i,:)' .* ones(size(num,2),num_slices_per_pat(ut_idx(i)));
+%         time_lbl_for_slices = num(ut_idx(i),2) * ones(1,num_slices_per_pat(ut_idx(i)));
+        lbl_4_slices = [lbl_4_slices; recurrence_lbl_for_slices'];
+%         time_labels = [time_labels; time_lbl_for_slices'];
     end
 
     % Setting up and outputing CSV file
-    header = {'File', 'ID', 'Slice', options.LabelType};
-    data = [cellstr(otfiles), num2cell(slice2pat), cellstr(tfiles), num2cell(wl_slices)];
+    header = options.CSV_header;
+%     header = {'File', 'ID', 'Slice', options.LabelType};
+    data = [cellstr(otfiles), num2cell(slice2pat), cellstr(tfiles), num2cell(lbl_4_slices(:,1)), num2cell(lbl_4_slices(:,2))];
     writetable(cell2table([header;data]),output_fname,'writevariablenames',0)
 end
