@@ -38,3 +38,10 @@ Deep learning for recurrence free survival prediction of ICC patients using imag
 * Worked on draft writeup
 * Found train and test split bug, was using 70 instead of 0.7 for split value and had wrong index for test_o_pat
 * Have model implemented but it is vastly overtraining right now with only 700 images, going to try with more to see if it's lack of data or a bug
+
+### March 1st, 2021
+* Realized I was working with recurrence codes and not recurrence time labels
+* Changed createCSV so the output has all the labels from RFS Scout included now
+* Going to try to implement the DeepConvSurv model from https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7822579&casa_token=gVFzncUVfTgAAAAA:hGgPWCTzS2pUnsFG8xEZzZe7lAIupB_Z7SkKDnFJbilFmX1W6Ge5qCipPjiqCynL1lfSs64bVV4 
+* Have the layers of DeepConvSurv set up
+* I'm stuck on the loss function part, going to try to figure it out tomorrow
