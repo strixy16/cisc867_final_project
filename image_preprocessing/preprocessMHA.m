@@ -106,8 +106,6 @@ function preprocessMHA(conf_f)
                 % images
                 imageCr = imcrop(slice, [startCol startRow, maxWidth maxHeight]);
                 
-                % resizing for Inception currently
-                % TODO: make this an input argument
                 imageCrR = imresize(imageCr, options.ImageSize);
 %                 figure();
 %                 imshow(imageCrR, []);

@@ -13,16 +13,19 @@ function opt = erasmus_tumors
 % Feb 19, 2021 - updated BinLoc so all tumor images go in one place
 %              - added ImageSize argument
 
+    % Dimensions for image resize step in preprocessMHA 
+    % (299 x 299 is Inception requirement)
+    % (1024 x 1024 is DeepConvSurv requirement)
+    opt.ImageSize = [1024 1024];
+    
     % Location of image files for tumour image set, for use in preprocessMHA
     opt.ImageLoc = "/Users/katyscott/Documents/ICC/Data/cholangio/Erasmus/tumors/";
+    
     % Location of bin folder containing tumour image slice set, for use in
     % preprocess MHA and createCSV
     % NOTE: this has subfolders NaN and zero in it 
-    opt.BinLoc = "/Users/katyscott/Documents/ICC/Data/Images/Tumors/";
+    opt.BinLoc = strcat("/Users/katyscott/Documents/ICC/Data/Images/Tumors/", string(opt.ImageSize(1)), "/");
     
-    % Dimensions for image resize step in preprocessMHA (299 x 299 is
-    % Inception requirement)
-    opt.ImageSize = [299 299];
     
     % Spreadsheet of labels, excel file, for use in createCSV.m
     opt.Labels = "/Users/katyscott/Documents/ICC/Data/RFS_Scout.xlsx";
