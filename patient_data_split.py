@@ -18,7 +18,7 @@ def pat_train_test_split(pat_num, label, split_perc, seed):
         sets - tuple of training and testing SLICE indices in a list
     """
     # Checking that split percentage is between 0 and 1 to print better error message
-    if split_perc > 1.0 or < 0.0:
+    if split_perc > 1.0 or split_perc < 0.0:
         print("Invalid split percentage. Must be between 0 and 1.")
         return -1
     
