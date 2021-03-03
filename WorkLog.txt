@@ -49,3 +49,8 @@ Deep learning for recurrence free survival prediction of ICC patients using imag
 ### March 2nd, 2021
 * Working off of a tutorial I found that does survival analysis on MNIST data
 * Can't get sksurv to import for some reason, so can't get this code to run
+
+### March 3rd, 2021
+* Got sksurv to import, just needed to install cmake in jupyter I guess
+* Generated KM curve with sksurv
+* Trying to use Cox PH and concordance index, following along with polsterl tutorial
