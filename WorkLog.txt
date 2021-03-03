@@ -45,3 +45,7 @@ Deep learning for recurrence free survival prediction of ICC patients using imag
 * Going to try to implement the DeepConvSurv model from https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7822579&casa_token=gVFzncUVfTgAAAAA:hGgPWCTzS2pUnsFG8xEZzZe7lAIupB_Z7SkKDnFJbilFmX1W6Ge5qCipPjiqCynL1lfSs64bVV4 
 * Have the layers of DeepConvSurv set up
 * I'm stuck on the loss function part, going to try to figure it out tomorrow
+
+### March 2nd, 2021
+* Working off of a tutorial I found that does survival analysis on MNIST data
+* Can't get sksurv to import for some reason, so can't get this code to run
