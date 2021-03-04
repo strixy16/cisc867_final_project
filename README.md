@@ -6,8 +6,6 @@ This repository is the official implementation of my term project for CISC 867 -
 
 A draft of the report can be found here: https://www.overleaf.com/read/dbfdzkndvtpv
 
->📋  Optional: include a graphic explaining your approach/main result, bibtex entry, link to demos, blog posts and tutorials
-
 ## Requirements
 
 To install requirements:
@@ -16,7 +14,15 @@ To install requirements:
 pip install -r requirements.txt
 ```
 
->📋  Describe how to set up the environment, e.g. pip/conda/docker commands, download datasets, etc...
+To use venv in Jupyter Lab:
+
+```
+python -m ipykernel install --name=deep_icc
+jupyter lab
+```
+deep_icc kernel can then be selected in Jupyter notebook.
+
+Beyond this point template has not been edited. 
 
 ## Training
 
@@ -26,11 +32,11 @@ To train the model(s) in the paper, run this command:
 python train.py --input-data <path_to_data> --alpha 10 --beta 20
 ```
 
->📋  Describe how to train the models, with example commands on how to train the models in your paper, including the full training procedure and appropriate hyperparameters.
+>📋  Describe how to train the models, with example commands on how to train the models in your paper, including the full training procedure and appropriate hyperparameters. 
 
 ## Evaluation
 
-To evaluate my model on ImageNet, run:
+To evaluate my model on ImageNet, run:  
 
 ```eval
 python eval.py --model-file mymodel.pth --benchmark imagenet
