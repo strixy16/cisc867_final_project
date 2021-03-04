@@ -54,3 +54,11 @@ Deep learning for recurrence free survival prediction of ICC patients using imag
 * Got sksurv to import, just needed to install cmake in jupyter I guess
 * Generated KM curve with sksurv
 * Trying to use Cox PH and concordance index, following along with polsterl tutorial
+* Added model architecture image to overleaf draft 
+* Worked a bit on overleaf draft - model architecture description
+
+### March 4th, 2021
+* Worked on README for draft submission
+* Finished commenting in patient_data_split.py
+* Worked through Polsterl tutorial again, made more sense today
+* Created my own set of files with the classes and functions from the tutorial 
