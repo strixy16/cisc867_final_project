@@ -6,6 +6,13 @@ This repository is the official implementation of my term project for CISC 867 -
 
 A draft of the report can be found here: https://www.overleaf.com/read/dbfdzkndvtpv
 
+# File Descriptions
+* *image_processing/* -> contains MatLab code for preprocessing .raw and .mhd files to .bin files for use in main. preprocesMHA and createCSV are the two main files to run.
+> *preprocessMHA.m* -> Function that converts .raw and .mhd to .bin files.
+> *createCSV.m -> Function that creates a CSV file connecting patients to file names, slices, and RFS labels.
+> *erasmus_tumors and msk_tumor* -> configuration files for preprocessMHA
+> *all_tumors -> configuration file for createCSV
+
 ## Requirements
 
 To install requirements:
@@ -22,7 +29,7 @@ jupyter lab
 ```
 deep_icc kernel can then be selected in Jupyter notebook.
 
-Beyond this point template has not been edited. 
+Beyond this point template has not been edited.
 
 ## Training
 
@@ -32,7 +39,7 @@ To train the model(s) in the paper, run this command:
 python train.py --input-data <path_to_data> --alpha 10 --beta 20
 ```
 
->📋  Describe how to train the models, with example commands on how to train the models in your paper, including the full training procedure and appropriate hyperparameters. 
+>📋  Describe how to train the models, with example commands on how to train the models in your paper, including the full training procedure and appropriate hyperparameters.
 
 ## Evaluation
 
