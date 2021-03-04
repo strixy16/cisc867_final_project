@@ -214,3 +214,18 @@ def logsumexp_masked(risk_scores, mask, axis=0, keepdims=None):
     with tf.name_scope("logsumexp_masked"):
         mask_f = tf.cast(mask, risk_scores.dtype)
         risk_scores_masked = tf.math.multiply(risk_scores, mask_f)
+        
+        # Subtract max value before taking exponential for numerical stability
+        amax = tf.reduce_max(risk_scores_masked, axis=axis, keepdims=True)
+        risk_scores_shift = risk_scores_masked - amax
+        
+        exp_masked = tf.math.multiply(tf.exp(risk_scores_shift), mask_f)
+        exp_sum = tf.reduce_sum(exp_masked, axis-axis, keepdims=True)
+        output = amax + tf.math.log(exp_sum)
+        
+        if not keepdims:
+            output = tf.squeeze(output, axis=axis)
+            
+    return output
+
+
