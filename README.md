@@ -6,14 +6,20 @@ This repository is the official implementation of my term project for CISC 867 -
 
 A draft of the report can be found here: https://www.overleaf.com/read/dbfdzkndvtpv
 
-## File Descriptions
-* *image_processing/* :arrow_right: contains MatLab code for preprocessing .raw and .mhd files to .bin files for use in main. preprocesMHA and createCSV are the two main files to run.
-  * *preprocessMHA.m* :arrow_right: Function that converts .raw and .mhd to .bin files.
-  * *createCSV.m* :arrow_right: Function that creates a CSV file connecting patients to file names, slices, and RFS labels.
-  * *erasmus_tumors and msk_tumor* :arrow_right: configuration files for preprocessMHA
-  * *all_tumors* -> configuration file for createCSV
+## File Descriptions :open_file_folder:
+* ***image_processing/*** :arrow_right: contains MatLab code for preprocessing .raw and .mhd files to .bin files for use in main. preprocesMHA and createCSV are the two main files to run.
+  * ***preprocessMHA.m*** :arrow_right: Function that converts .raw and .mhd to .bin files.
+  * ***createCSV.m*** :arrow_right: Function that creates a CSV file connecting patients to file names, slices, and RFS labels.
+  * ***erasmus_tumors/msk_tumor*** :arrow_right: configuration files for preprocessMHA
+  * ***all_tumors*** :arrow_right: Configuration file for createCSV
 
-* *main.ipynb* ->
+* ***main.ipynb*** :arrow_right: Main chunk of code developed so far, loads in images and label data, performs train and test splitting, beginning of model development
+
+* ***patient_data_split.py*** :arrow_right: Function to properly split patient data into train and test sets. Split is performed so CT slices from a single patient are not spread across sets.
+
+* ***WorkLog.txt*** :arrow_right: Log of work completed so far. Was the original README so is formatted in that way.
+
+* ***old_main.py*** :arrow_right: Original main file, has been converted to Jupyter notebook, see main.ipynb.
 
 ## Requirements
 
