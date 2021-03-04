@@ -229,3 +229,73 @@ def logsumexp_masked(risk_scores, mask, axis=0, keepdims=None):
     return output
 
 
+class CoxPHLoss(tf.keras.losses.Loss):
+    """
+    Negative partial log-likelihood of Cox's proportional hazards model
+    """
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        
+    def call(self, y_true, y_pred):
+        """
+        Compute loss
+        
+        Args:
+            y_true: list/tuple of rank 2 tf.Tensors
+                   - first element holds binary vector where 1 indicates event, 0 indicates censoring
+                   - second element holds riskset = boolean matrix where ith row denots risk set of ith instance
+            y_pred: rank 2 tf.Tensor of predicted outputs
+        
+        Returns:
+            loss: tf.Tensor containing loss for each instance in a batch
+        """
+        event, riskset = y_true
+        predictions = y_pred
+        
+        # INPUT CHECKING
+        pred_shape = predictions.shape
+        if pred_shape.ndims != 2:
+            raise ValueError("Rank mismatch: Rank of predictions (received %s) should "
+                             "be 2." % pred_shape.ndims)
+        
+        if pred_shape[1] is None:
+            raise ValueError("Last dimension of predictions must be known.")
+
+        if pred_shape[1] != 1:
+            raise ValueError("Dimension mismatch: Last dimension of predictions "
+                             "(received %s) must be 1." % pred_shape[1])
+
+        if event.shape.ndims != pred_shape.ndims:
+            raise ValueError("Rank mismatch: Rank of predictions (received %s) should "
+                             "equal rank of event (received %s)" % (
+                pred_shape.ndims, event.shape.ndims))
+
+        if riskset.shape.ndims != 2:
+            raise ValueError("Rank mismatch: Rank of riskset (received %s) should "
+                             "be 2." % riskset.shape.ndims)
+            
+        
+        event = tf.cast(event, predictions.dtype)
+        # Normalize risk scores
+        predictions = safe_normalize(predictions)
+        
+        # More input checking
+        with tf.name_scope("assertions"):
+            assertions = (
+                            tf.debugging.assert_less_equal(event, 1.),
+                            tf.debugging.assert_greater_equal(event, 0.),
+                            tf.debugging.assert_type(riskset, tf.bool)
+                         )
+        
+        # move batch dimension to the end so predictions get broadcast row-wise when multiplying by riskset
+        # row-wise when multiplying by riskset
+        pred_t = tf.transpose(predictions)
+        
+        # compute log of sum over risk set for each row
+        rr = logsumexp_masked(pred_t, riskset, axis=1, keepdims=True)
+        assert rr.shape.as_list() == predictions.shape.as_list()
+        
+        losses = tf.math.multiply(event, rr - predictions)
+        
+        return losses
