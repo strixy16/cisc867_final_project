@@ -1,3 +1,5 @@
 From_Travis/
 *.asv
 .DS_Store
+.ipynb*
+Polsterl_tutorial.ipynb
