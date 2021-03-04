@@ -11,37 +11,38 @@ import tensorflow as tf
 def _make_riskset(time):
     """
     Compute mask that represents each sample's risk set
-    
+
     Args:
-        time - numpy array of observed event times, shape = (n_samples,) 
-              
-    
+        time - numpy array of observed event times, shape = (n_samples,)
+
+
     Returns:
-        risk_set - numpy array of boolean values with risk sets in rows, shape = (n_samples, n_samples)            
+        risk_set - numpy array of boolean values with risk sets in rows, shape = (n_samples, n_samples)
     """
-    
+
     assert time.ndim == 1
-    
+
     # Sort in descending order
     o = np.argsort(-time, kind="mergesort")
-    
+
     # Initialize risk set
     n_samples = len(time)
     risk_set = np.zeros((n_samples, n_samples), dtype=np.bool_)
-    
+
     for i_org, i_sort in enumerate(o):
         ti = time[i_sort]
         k = i_org
         while k < n_samples and ti == time[o[k]]:
             k += 1
         risk_set[i_sort, o[:k]] = True
-    
+
     return risk_set
-    
-class InputFunction: 
+
+
+class InputFunction:
     """
     Callable input function that computes the risk set for each batch
-    
+
     Args:
         images - numpy array of images, shape = (n_samples, height, width)
         time - numpy array of observed time labels, shape = (n_samples,)
@@ -51,12 +52,12 @@ class InputFunction:
         shuffle - bool, whether to shuffle data
         seed - int, random number seed
     """
-    
+
     def __init__(self, images, time, event, batch_size=64, drop_last=False, shuffle=False, seed = 89):
         # If image is 3D, reduce dimension to 2D
         if images.ndim == 3:
             images = images[..., np.newaxis]
-        
+
         self.images = images
         self.time = time
         self.event = event
@@ -64,26 +65,26 @@ class InputFunction:
         self.drop_last = drop_last
         self.shuffle = shuffle
         self.seed = seed
-        
+
     def size(self):
         """
         Total number of samples
         """
         return self.images.shape[0]
-    
+
     def steps_per_epoch(self):
         """
         Number of batches for one epoch
         """
         return int(np.floor(self.size() / self.batch_size))
-    
+
     def _get_data_batch(self, index):
         """
         Compute risk set for samples in a batch
-        
+
         Args:
             index - indices for the batch
-            
+
         Returns:
             images - numpy array of images in the batch
             labels - dictionary of tuples (str, numpy array) with event, time, and riskset labels
@@ -91,42 +92,42 @@ class InputFunction:
         time = self.time[index]
         event = self.event[index]
         image = self.images[index]
-        
+
         # Create dictionary of the labels for the batch samples
         labels = {
                     "label_event": event.astype(np.int32),
                     "label_time": time.astype(np.int32),
                     "label_riskset": _make_riskset(time)
                  }
-            
+
         return images, labels
-    
+
     def _iter_data(self):
         """
         Generator that yields one batch at a time
-        
+
         Returns:
             Iterable object over get_data_batch output
         """
         index = np.arange(self.size())
         rnd = np.random.RandomState(self.seed)
-        
+
         if self.shuffle:
             rnd.shuffle(index)
         for b in range(self.steps_per_epoch()):
             start = b * self.batch_size
             idx = index[start:(start + self.batch)]
             yield self._get_data_batch(idx)
-        
+
         if not self.drop_last:
             start = self.steps_per_epoch() * self.batch_size
             idx = index[start:]
             yield self._get_data_batch(idx)
-            
+
     def _get_shapes(self):
         """
         Return shapes of data returned by self._iter_data
-        
+
         Returns:
             images - tf.TensorShape, shape specification for images
             labels - dictionary of (str, tf.TensorShape), shape specification for labels
@@ -134,18 +135,18 @@ class InputFunction:
         batch_size = self.batch_size if self.drop_last else None
         h, w, c = self.images.shape[1:]
         images = tf.TensorShape([batch_size, h, w, c])
-        
+
         labels = {
                     k: tf.TensorShape((batch_size,))
-                    for k in ("label_event", "label_time")     
+                    for k in ("label_event", "label_time")
                  }
         labels["label_riskset"] = tf.TensorShape((batch_size, batch_size))
         return images, labels
-    
+
     def _get_dtypes(self):
         """
         Return dtypes of data returned by self._iter_data
-        
+
         Returns:
             tf.float32 - tf.Dtype
             labels - dtype of labels
@@ -156,11 +157,11 @@ class InputFunction:
                     "label_riskset": tf.bool
                  }
         return tf.float32, labels
-    
+
     def _make_dataset(self):
         """
         Create dataset from generator
-        
+
         Returns:
             ds - Dataset containing data, types, and shapes of the images and labels
         """
@@ -170,6 +171,46 @@ class InputFunction:
             self._get_shapes()
         )
         return ds
-    
+
     def __call__(self):
         return self._make_dataset()
+
+    
+
+def safe_normalize(x):
+    """
+    Normalize risk scores to avoid exp underflowing
+    
+    Note that only risk scores relative to each other matter. 
+    If min. risk score is negative, shift scores so minimum is at zero.
+    
+    Args:
+        x - tf.Tensor, risk scores
+        
+    Returns:
+        normalized x as tf.Tensor
+    """
+    x_min = tf.reduce_min(x, axis=0)
+    c = tf.zeros_like(x_min)
+    norm = tf.where(x_min < 0, -x_min, c)
+    return x + norm
+
+
+def logsumexp_masked(risk_scores, mask, axis=0, keepdims=None):
+    """
+    Compute logsumexp across `axis` for entries where `mask` is true
+    
+    Args:
+        risk_scores - tf.Tensor of predicted outputs of CoxPH, must be 2D
+        mask - numpy array of boolean values with risk sets in rows, shape = (n_samples, n_samples)
+        axis - int indicating which axis to perform sum across, should be axis samples is on (?)
+        keepdims - bool, wheter to retain reduced dimensions in calculations
+    
+    Return:
+        output - tf.Tensor logsumexp for risk scores
+    """
+    risk_scores.shape.assert_same_rank(mask.shape)
+    
+    with tf.name_scope("logsumexp_masked"):
+        mask_f = tf.cast(mask, risk_scores.dtype)
+        risk_scores_masked = tf.math.multiply(risk_scores, mask_f)
