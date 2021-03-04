@@ -37,7 +37,7 @@ jupyter lab
 ```
 deep_icc kernel can then be selected in Jupyter notebook.
 
-***Beyond this point template has not been edited.***
+##***Beyond this point template has not been edited.***
 
 ## Training
 
