@@ -6,12 +6,12 @@ This repository is the official implementation of my term project for CISC 867 -
 
 A draft of the report can be found here: https://www.overleaf.com/read/dbfdzkndvtpv
 
-# File Descriptions
+## File Descriptions
 * *image_processing/* -> contains MatLab code for preprocessing .raw and .mhd files to .bin files for use in main. preprocesMHA and createCSV are the two main files to run.
-> *preprocessMHA.m* -> Function that converts .raw and .mhd to .bin files.
-> *createCSV.m -> Function that creates a CSV file connecting patients to file names, slices, and RFS labels.
-> *erasmus_tumors and msk_tumor* -> configuration files for preprocessMHA
-> *all_tumors -> configuration file for createCSV
+  * *preprocessMHA.m* -> Function that converts .raw and .mhd to .bin files.
+  * *createCSV.m* -> Function that creates a CSV file connecting patients to file names, slices, and RFS labels.
+  * *erasmus_tumors and msk_tumor* -> configuration files for preprocessMHA
+  * *all_tumors* -> configuration file for createCSV
 
 ## Requirements
 
