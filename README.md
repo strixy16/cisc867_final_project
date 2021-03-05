@@ -8,6 +8,8 @@ This repository is the official implementation of my term project for CISC 867 -
 
 A draft of the report can be found here: https://www.overleaf.com/read/dbfdzkndvtpv
 
+Tutorial on Deep Survival Analysis that network code is based on: https://k-d-w.org/blog/2019/07/survival-analysis-for-deep-learning/
+
 ## File Descriptions :open_file_folder:
 * ***image_preprocessing/*** :arrow_right: contains MatLab code for preprocessing .raw and .mhd files to .bin files for use in main. preprocesMHA and createCSV are the two main files to run.
   * ***preprocessMHA.m*** :arrow_right: Function that converts .raw and .mhd to .bin files.
@@ -19,9 +21,13 @@ A draft of the report can be found here: https://www.overleaf.com/read/dbfdzkndv
 
 * ***patient_data_split.py*** :arrow_right: Function to properly split patient data into train and test sets. Split is performed so CT slices from a single patient are not spread across sets.
 
+* ***cindex_metric/cph_loss/input_function/train_and_evaluate*** :arrow_right: all contain code from the Polsterl Deep Survival Analysis tutorial linked above to be used for model creation/training/testing/evaluation.
+
 * ***WorkLog.txt*** :arrow_right: Log of work completed so far. Was the original README so is formatted in that way.
 
 * ***old_main.py*** :arrow_right: Original main file, has been converted to Jupyter notebook, see main.ipynb.
+
+
 
 ## Requirements
 
