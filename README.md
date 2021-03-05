@@ -2,7 +2,7 @@
 
 # Survival Prediction For Intrahepatic Cholangiocarcinoma Using Semi-supervised Deep Learning with Radiographic Images
 
-*Katy Scott | 15kls3@queensu.ca*
+*Katy Scott* | *15kls3@queensu.ca*
 
 This repository is the official implementation of my term project for CISC 867 - Winter 2021.
 
