@@ -29,8 +29,9 @@ class CindexMetric:
         Collect observed time, event indicator and predictions for a batch
         
         Args:
-            y_true - dictionary containing 1) label_time = tensor containing observed time for one batch
-                                           2) label_event = tensor containing event indicator for one batch
+            y_true - dictionary containing: 
+                    1) label_time = tensor containing observed time for one batch
+                    2) label_event = tensor containing event indicator for one batch
             y_pred - tf.Tensor containing predicted risk scores for one batch
         """
         
