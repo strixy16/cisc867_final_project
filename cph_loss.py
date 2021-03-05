@@ -1,4 +1,4 @@
-# Name: CPH_loss.py
+# Name: cph_loss.py
 # Environment: Python 3.8
 # Author: Katy Scott
 # Last updated: March 4, 2021
