@@ -23,6 +23,8 @@ function createCSV(conf_f, background)
 %   Mar 1, 2021 - updated to include all label columns in options.Labels in
 %                 output
 %               - changed CSV header to be a variable in conf_f
+%   Mar 31, 2021 - added having a specific directory for label CSV with
+%                  different image sizes
 
     % Getting variables from configuration file
     if ischar(conf_f)
@@ -36,6 +38,11 @@ function createCSV(conf_f, background)
         % use location of bin files with nans in background
         bin_dir = options.NaNLoc;
         output_fname = options.NaNCSV;
+        % Making sure output directory exists, create it if it doesn't
+        nan_dir = fileparts(output_fname);
+        if ~exist(nan_dir, 'dir')
+            mkdir(nan_dir);
+        end
     else
         % use location of bin files with zeros in background
         if background ~= "zeros"
@@ -43,6 +50,11 @@ function createCSV(conf_f, background)
         end
         bin_dir = options.ZeroLoc;
         output_fname = options.ZeroCSV;
+        % Making sure output directory exists, create it if it doesn't
+        zero_dir = fileparts(output_fname);
+        if ~exist(zero_dir, 'dir')
+            mkdir(zero_dir);
+        end
     end
         
     % Get list of all bin files
