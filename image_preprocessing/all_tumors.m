@@ -9,13 +9,18 @@ function opt = all_tumors
 %Author: Katy Scott
 %Created: 19 Jan 2021
 %Updates:
+    
+    msk_options = msk_tumor;
+    erasmus_options = erasmus_tumors;
+
+    opt.ImageSize = msk_options.ImageSize;
 
     % Location of bin folder containing tumour image slice set with zeros
     % in background for use in createCSV
-    opt.ZeroLoc = "/Users/katyscott/Documents/ICC/Data/Images/Tumors/Zero/";
+    opt.ZeroLoc = strcat("/Users/katyscott/Documents/ICC/Data/Images/Tumors/", string(opt.ImageSize(1)),"/Zero/");
     % Location of bin folder containing tumour image slice set with NaNs
     % in background for use in createCSV
-    opt.NaNLoc = "/Users/katyscott/Documents/ICC/Data/Images/Tumors/NaN/";
+    opt.NaNLoc = strcat("/Users/katyscott/Documents/ICC/Data/Images/Tumors/", string(opt.ImageSize(1)),"/NaN/");
     
     % Spreadsheet of labels, excel file, for use in createCSV.m
     opt.Labels = "/Users/katyscott/Documents/ICC/Data/RFS_Scout.xlsx";
@@ -25,6 +30,6 @@ function opt = all_tumors
 %     opt.Label1 = 'RFS Code'; % if a patient had cancer recurrence or not
 %     opt.Label2 = 'RFS Time'; % Time to recurrence
     % File name + location to output in createCSV.m
-    opt.ZeroCSV = "/Users/katyscott/Documents/ICC/Data/Labels/RFS_all_tumors_zero.csv";
-    opt.NaNCSV = "/Users/katyscott/Documents/ICC/Data/Labels/RFS_all_tumors_NaN.csv";
+    opt.ZeroCSV = strcat("/Users/katyscott/Documents/ICC/Data/Labels/", string(opt.ImageSize(1)), "/RFS_all_tumors_zero.csv");
+    opt.NaNCSV = strcat("/Users/katyscott/Documents/ICC/Data/Labels/", string(opt.ImageSize(1)), "/RFS_all_tumors_NaN.csv");
 end
