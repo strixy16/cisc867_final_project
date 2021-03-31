@@ -62,3 +62,17 @@ Deep learning for recurrence free survival prediction of ICC patients using imag
 * Finished commenting in patient_data_split.py
 * Worked through Polsterl tutorial again, made more sense today
 * Created my own set of files with the classes and functions from the tutorial 
+
+### March 29th, 2021
+* Working off of Debugging tutorial now
+* Going to do some more in depth data exploration
+* Made plots for patient and slice level  - in powerpoint presentation
+
+### March 30th, 2021
+* Tried loading in all of the images, but was resizing them to 1024 so it took 12 hours
+
+### March 31st, 2021
+* Ran image preprocessing to use images that are 256x256 instead and it loads in 20 minutes instead
+* I ran a linear regression and it sucked but I ran it so that counts
+* Have distribution plots for training and testing splits, looks roughly even which is good
+* Need to finish the tutorial code I was working on at the beginning of the month
