@@ -87,8 +87,8 @@ def pat_train_test_split(pat_num, label, split_perc, seed = 16):
         test_o_slice = np.concatenate((test_o_slice, ts_slice_o))
 
     # Combine censored and non-censored slice sets
-    train_slice = [np.concatenate((train_z_slice, train_o_slice)).astype(int)]
-    test_slice = [np.concatenate((test_z_slice, test_o_slice)).astype(int)]
+    train_slice = np.concatenate((train_z_slice, train_o_slice)).astype(int)
+    test_slice = np.concatenate((test_z_slice, test_o_slice)).astype(int)
 
     # Tuple of indices for training and testing slices
     sets = (train_slice, test_slice)
