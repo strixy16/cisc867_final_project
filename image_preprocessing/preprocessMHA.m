@@ -118,13 +118,25 @@ function preprocessMHA(conf_f)
                 % Removed class labelling, using only ICC class
                 binFileName = strcat(baseDirs(currFile).name(1:end-4), '_Slice_', num2str(sliceID), '.bin');
                 
+                % Check if NaN and Zero directories exist, and create them
+                % if they don't
+                nan_dir = strcat(options.BinLoc, 'NaN/');
+                zero_dir = strcat(options.BinLoc, 'Zero/');
+                
+                if ~exist(nan_dir, 'dir')
+                    mkdir(nan_dir);
+                end
+                if ~exist(zero_dir, 'dir')
+                    mkdir(zero_dir);
+                end
+                          
                 % Save image version with NaNs
-                nanFileID = fopen(strcat(options.BinLoc, 'NaN/', binFileName), 'w');
+                nanFileID = fopen(strcat(nan_dir, binFileName), 'w');
                 fwrite(nanFileID, imageCrR, 'double');
                 fclose(nanFileID);
                 
                 % Save image version with zeros instead of NaNs
-                zeroFileID = fopen(strcat(options.BinLoc, 'Zero/', binFileName), 'w');
+                zeroFileID = fopen(strcat(zero_dir, binFileName), 'w');
                 fwrite(zeroFileID, imageCrRZ, 'double');
                 fclose(zeroFileID);
                 
