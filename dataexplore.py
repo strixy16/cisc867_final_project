@@ -1,6 +1,7 @@
 # Name: dataexplore.py
 # Environment: Python 3.8
 # Author: Katy Scott
+# Created: April 1, 2021
 # Script to do preliminary data analysis and generate distribution plots and Kaplan Meieir analysis
 
 from importlib import reload
