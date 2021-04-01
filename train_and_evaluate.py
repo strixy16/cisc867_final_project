@@ -66,10 +66,12 @@ class TrainAndEvaluateModel:
             ckpt.restore(ckpt_manager.latest_checkpoint)
             print(f"Latest checkpoint restored from {ckpt_manager.latest_checkpoint}.")
 
+        train_dir = self.model_dir + "train"
+        valid_dir = self.model_dir + "valid"
         train_summary_writer = summary.create_file_writer(
-            str(self.model_dir / "train"))
+            train_dir)
         val_summary_writer = summary.create_file_writer(
-            str(self.model_dir / "valid"))
+            valid_dir)
 
         for epoch in range(self.num_epochs):
             with train_summary_writer.as_default():
