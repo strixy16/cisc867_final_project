@@ -92,7 +92,7 @@ class InputFunction:
         """
         time = self.time[index]
         event = self.event[index]
-        image = self.images[index]
+        images = self.images[index]
 
         # Create dictionary of the labels for the batch samples
         labels = {
