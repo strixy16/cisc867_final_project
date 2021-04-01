@@ -4,3 +4,5 @@ From_Travis/
 Polsterl_tutorial.ipynb
 .DS_Store
 __pycache__/
+.Rhistory
+.DS_Store
