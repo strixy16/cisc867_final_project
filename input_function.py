@@ -175,3 +175,4 @@ class InputFunction:
 
     def __call__(self):
         return self._make_dataset()
+    
