@@ -1,3 +1,8 @@
+# Name: dataexplore.py
+# Environment: Python 3.8
+# Author: Katy Scott
+# Script to do preliminary data analysis and generate distribution plots and Kaplan Meieir analysis
+
 from importlib import reload
 import math
 import matplotlib.pyplot as plt
