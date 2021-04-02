@@ -125,8 +125,8 @@ class CoxPHLoss(tf.keras.losses.Loss):
         
         # compute log of sum over risk set for each row
         rr = logsumexp_masked(pred_t, riskset, axis=1, keepdims=True)
-        
-        assert rr.shape.as_list() == predictions.shape.as_list(), "Hello"
+        # print(rr.shape.as_list())
+        assert rr.shape.as_list() == predictions.shape.as_list(), "Hello?"
         
         losses = tf.math.multiply(event, rr - predictions)
         

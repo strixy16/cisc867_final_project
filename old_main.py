@@ -29,7 +29,7 @@ from typing import Any, Dict, Iterable, Sequence, Tuple, Optional, Union
 from patient_data_split import pat_train_test_split
 
 # Constants for development
-FILESTOLOAD = 2888  # 2888 is all of them
+FILESTOLOAD = 10  # 2888 is all of them
 imdim_from_preprocessing = 256  # must match opt.ImageSize in image preprocessing configuration files
 imdim_for_network = 256
 random_seed = 16
@@ -74,7 +74,7 @@ for image_file in tqdm(image_fnames):
 
 images = np.delete(images, 0, axis=0)
 
-plt.imshow(images[8], cmap='Greys')
+# plt.imshow(images[8], cmap='Greys')
 
 # Training and testing split
 split = 0.9

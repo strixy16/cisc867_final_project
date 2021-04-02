@@ -111,10 +111,12 @@ class TrainAndEvaluateModel:
 
             step_counter.assign_add(1)
 
-    @tf.function
+    # @tf.function
     def evaluate_one_step(self, x, y_event, y_riskset):
         y_event = tf.expand_dims(y_event, axis=1)
+        # call model on single input
         val_logits = self.model(x, training=False)
+        # call CPHLoss
         val_loss = self.loss_fn(y_true=[y_event, y_riskset], y_pred=val_logits)
         return val_loss, val_logits
 
@@ -122,8 +124,7 @@ class TrainAndEvaluateModel:
         self.val_cindex_metric.reset_states()
         
         for x_val, y_val in self.val_ds:
-            val_loss, val_logits = self.evaluate_one_step(
-                x_val, y_val["label_event"], y_val["label_riskset"])
+            val_loss, val_logits = self.evaluate_one_step(x_val, y_val["label_event"], y_val["label_riskset"])
 
             # Update val metrics
             self.val_loss_metric.update_state(val_loss)
