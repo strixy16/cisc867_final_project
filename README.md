@@ -67,7 +67,7 @@ First create a configuration file for your dataset. You can follow the setup of 
 To crop images based on max height and width for that set, run this command in MATLAB:
 ``` 
 preprocessMHA(config_file);
-createCSV(config_file) 
+createCSV(config_file); 
 ```
 This should generate a directory of individual BIN files for each slice of the MHD volume and a corresponding CSV label file.
 
