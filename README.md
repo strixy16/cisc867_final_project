@@ -45,7 +45,30 @@ jupyter lab
 ```
 deep_icc kernel can then be selected in Jupyter notebook.
 
-## ***Beyond this point template has not been edited.***
+## Image Preprocessing 🖼️
+
+To use the MATLAB preprocessing functions, preprocessMHA and createCSV, you will need:
+* A directory of corresponding MHD and raw files
+* A spreadsheet with labels for each sample
+
+First create a configuration file for your dataset. You can follow the setup of msk_tumor and all_tumors. The variables required are:
+
+*For preprocessMHA*
+* ImageSize: dimensions to crop your image to for the network (ex. \[256 x 256]) 
+* ImageLoc: path to the directory your MHD and raw files are in
+* BinLoc: path to the directory to store the output BIN files
+
+*For createCSV*
+* ZeroLoc: path to directory of BIN files with zeros for background
+* Labels: path to spreadsheet file containing labels 
+* CSV_header: Set headings for label output CSV
+* OutputCSV: path and name of output CSV linking labels to BIN files
+
+To crop images based on max height and width for that set, run this command in MATLAB:
+``` preprocessMHA(config_file);
+createCSV(config_file) 
+```
+This should generate a directory of individual BIN files for each slice of the MHD volume and a corresponding CSV label file.
 
 ## Training
 
