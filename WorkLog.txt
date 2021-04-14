@@ -86,3 +86,11 @@ Deep learning for recurrence free survival prediction of ICC patients using imag
 * Got tutorial code working
 * Seems like images are too much for sksurv CPH to work with
 * Could try removing really tiny tumour images?
+
+### April 13th, 2021
+* Did some more model training
+* Made clean versions of model code and data exploration
+* Data exploration has data distributions, Kaplan Meier survival curve, Linear regression, and attempted Cox Proportional Hazards
+* Main now has the cleaned model code, including the Polsterl model, DCS model, and my own best model
+* Updated README to have data preprocessing section and updated file descriptions and title 
+* Going to run linear regression overnight so I have those stats for report
