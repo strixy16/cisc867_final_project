@@ -17,19 +17,18 @@ Tutorial on Deep Survival Analysis that network code is based on: https://k-d-w.
   * ***erasmus_tumors/msk_tumor*** :arrow_right: configuration files for preprocessMHA
   * ***all_tumors*** :arrow_right: Configuration file for createCSV
 
-* ***main.ipynb*** :arrow_right: Main chunk of code developed so far, loads in images and label data, performs train and test splitting, beginning of model development
+* ***main.ipynb*** :arrow_right: Main notebook for deep-icc. Contains all model functions, data loading, and three of the models that were trained in the development process. Training results presented in report can be visualized in this notebook.
 
 * ***patient_data_split.py*** :arrow_right: Function to properly split patient data into train and test sets. Split is performed so CT slices from a single patient are not spread across sets.
 
-* ***cindex_metric/cph_loss/input_function/train_and_evaluate*** :arrow_right: all contain code from the Polsterl Deep Survival Analysis tutorial linked above to be used for model creation/training/testing/evaluation.
+* ***data_explore.ipynb*** :arrow_right: Notebook containing exploratory code. Includes data distribution plots, Kaplan Meier survival curve, linear regression, and attempt at Cox Proportional Hazards modelling
 
 * ***WorkLog.txt*** :arrow_right: Log of work completed so far. Was the original README so is formatted in that way.
 
-* ***old_main.py*** :arrow_right: Original main file, has been converted to Jupyter notebook, see main.ipynb.
+* ***old_code/***: :arrow_right: Code written in process of development. Was either broken and abandoned or absorbed into the files listed above.
 
 
-
-## Requirements
+## Requirements 📋
 
 To install requirements:
 
