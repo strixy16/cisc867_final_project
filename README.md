@@ -21,7 +21,7 @@ Tutorial on Deep Survival Analysis that network code is based on: https://k-d-w.
 
 * ***data_explore.ipynb*** :arrow_right: Notebook containing exploratory code. Includes data distribution plots, Kaplan Meier survival curve, linear regression, and attempt at Cox Proportional Hazards modelling
 
-* ***ckpts-kt-100*** :arrow_right: Saved Tensorflow checkpoints for KT6 model
+* ***ckpts-kt6-cnn-100*** :arrow_right: Saved Tensorflow checkpoints for KT6 model
 
 * ***WorkLog.txt*** :arrow_right: Log of work completed so far. Was the original README so is formatted in that way.
 
