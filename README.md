@@ -21,6 +21,8 @@ Tutorial on Deep Survival Analysis that network code is based on: https://k-d-w.
 
 * ***data_explore.ipynb*** :arrow_right: Notebook containing exploratory code. Includes data distribution plots, Kaplan Meier survival curve, linear regression, and attempt at Cox Proportional Hazards modelling
 
+* ***ckpts-kt-100*** :arrow_right: Saved Tensorflow checkpoints for KT6 model
+
 * ***WorkLog.txt*** :arrow_right: Log of work completed so far. Was the original README so is formatted in that way.
 
 * ***old_code/***: :arrow_right: Code written in process of development. Was either broken and abandoned or absorbed into the files listed above.
@@ -73,7 +75,7 @@ This should generate a directory of individual BIN files for each slice of the M
 Model creation and training is available in `main.ipynb`
 
 The data used to train the KT6 model described in the report is not publicly available. 
-Output from training this model is included in the notebook. 
+Output from training this model is included in the notebook. `ckpts-kt-100` contains the stored training checkpoints that can be loaded into the Tensorboard at the end of the notebook.
 
 
 ## Results 📈
