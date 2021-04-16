@@ -161,6 +161,7 @@ dependencies:
   - pandocfilters=1.4.2=py_1
   - parso=0.8.2=pyhd8ed1ab_0
   - partd=1.2.0=pyhd8ed1ab_0
+  - patsy=0.5.1=py_0
   - pcre=8.44=he1b5a44_0
   - pexpect=4.8.0=pyh9f0ad1d_2
   - pickleshare=0.7.5=py_1003
@@ -205,12 +206,15 @@ dependencies:
   - scikit-learn=0.24.1=py39h4dfa638_0
   - scikit-survival=0.15.0.post0=py39h9a426be_0
   - scipy=1.6.2=py39hee8e79c_0
+  - seaborn=0.11.1=hd8ed1ab_1
+  - seaborn-base=0.11.1=pyhd8ed1ab_1
   - send2trash=1.5.0=py_0
   - setuptools=49.6.0=py39hf3d152e_3
   - six=1.15.0=pyh9f0ad1d_0
   - snappy=1.1.8=he1b5a44_3
   - sniffio=1.2.0=py39hf3d152e_1
   - sqlite=3.35.4=h74cdb3f_0
+  - statsmodels=0.12.2=py39hce5d2b2_0
   - tensorboard=2.4.1=pyhd8ed1ab_0
   - tensorboard-plugin-wit=1.8.0=pyh44b312d_0
   - tensorflow=2.4.1=mkl_py39h4683426_0
