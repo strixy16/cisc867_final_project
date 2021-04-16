@@ -30,19 +30,13 @@ Tutorial on Deep Survival Analysis that network code is based on: https://k-d-w.
 
 ## Requirements 📋
 
-To install requirements:
+To setup the model in a conda environment, run the following:
 
 ```setup
-pip install -r requirements.txt
-```
-
-To use venv in Jupyter Lab:
-
-```
-python -m ipykernel install --name=deep_icc
+conda create --name deepicc -f environment.yml
 jupyter lab
 ```
-deep_icc kernel can then be selected in Jupyter notebook.
+Make sure the kernel is set to Python3 and you can now run the main and data_explore notebooks.
 
 ## Image Preprocessing 🖼️
 
