@@ -29,6 +29,7 @@ Tutorial on Deep Survival Analysis that network code is based on: https://k-d-w.
 
 
 ## Requirements 📋
+To run image preprocessing, MATLAB R2020b or later is required.
 
 To setup the model in a conda environment, run the following:
 
