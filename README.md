@@ -6,6 +6,8 @@
 
 This repository is the official implementation of my term project for CISC 867 - Winter 2021.
 
+Project report can be found in the main directory under `Report_DeepICC.pdf`
+
 Tutorial on Deep Survival Analysis that network code is based on: https://k-d-w.org/blog/2019/07/survival-analysis-for-deep-learning/
 
 ## File Descriptions :open_file_folder:
