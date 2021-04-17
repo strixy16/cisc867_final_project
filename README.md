@@ -1,6 +1,6 @@
 
 
-# Survival Prediction For Intrahepatic Cholangiocarcinoma Using Deep Learning with Radiographic Images
+# Non-linear Survival Analysis For Intrahepatic Cholangiocarcinoma Using Deep Learning with Radiographic Images
 
 *Katy Scott* | *15kls3@queensu.ca*
 
